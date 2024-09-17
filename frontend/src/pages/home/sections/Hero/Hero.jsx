@@ -1,63 +1,63 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Slider, Typography } from "@mui/material";
 import ToggleTable from "./ToggleTable";
-import * as React from 'react';
-// import Card from '@mui/joy/Card';
-// import CardCover from '@mui/joy/CardCover';
-// import CardContent from '@mui/joy/CardContent';
-// import Typography from '@mui/joy/Typography';
-// import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
-
+import * as React from "react";
+import HeroSlider from "./HeroSlider";
+import { Link as RouterLink } from "react-router-dom";
 
 const Hero = () => {
-  return <div>
-    <Box
-        component="img"
+  return (
+    <Box backgroundColor={"#FBF9F2"} sx={{ position: "relative" }}>
+      <HeroSlider></HeroSlider>
+      <Box
         sx={{
-          width: '100%',
-          height:'85vh',
-          
-        }}
-        alt="The house from the offer."
-        src="https://i.ibb.co/kBfdB3y/chuttersnap-Da-Lstmw0r9-Y-unsplash.jpg"
-      />
-        <div style={{position: 'absolute', top:'40%', paddingLeft: '10%',background:
-            ' linear-gradient(to top, rgba(106, 90, 205,0.8), rgba(0,0,0,0) )',width: '100%',
-          height:'60vh',}}>
-        <h1>10% Winter Discount Is Going On!</h1>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis, voluptatibus.</p>
-        <Button variant="contained" size="large" sx={{mt:5}}>
-          Register/Sign In
-        </Button>
-      </div>
-       {/* <Card sx={{ minHeight: '280px', width: 320 }}>
-      <CardCover>
-        <img
-          src="https://images.unsplash.com/photo-1542773998-9325f0a098d7?auto=format&fit=crop&w=320"
-          srcSet="https://images.unsplash.com/photo-1542773998-9325f0a098d7?auto=format&fit=crop&w=320&dpr=2 2x"
-          loading="lazy"
-          alt=""
-        />
-      </CardCover>
-      <CardCover
-        sx={{
+          position: "absolute",
+          top: "0%",
+          bottom: "0%",
+          paddingLeft: {
+            xs:'5%',
+            sm:'5%',
+            md:"4%",
+            lg:'12%'
+          },
           background:
-            'linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 300px)',
+            "linear-gradient(to top, rgb(0 0 0 / 58%), rgb(0 0 0 / 90%) )",
+          width: "100%",
+          height: "95vh",
+          zIndex: 1000,
+          display: "flex",
+          alignItems: "center",
         }}
-      />
-      <CardContent sx={{ justifyContent: 'flex-end' }}>
-        <Typography level="h2" fontSize="lg" textColor="#fff" mb={1}>
-          Yosemite National Park
-        </Typography>
-        <Typography
-          startDecorator={<LocationOnRoundedIcon />}
-          textColor="neutral.300"
-        >
-          California, USA
-        </Typography>
-      </CardContent>
-    </Card> */}
+      >
+        <Box>
+          <Typography variant="h3" component="h1" sx={{ color: "white", fontSize: {
+            xs: '45px',
+            md: '55px',
+          } }}>
+            10% Winter Sale Is Going On!
+          </Typography>
+          <Typography variant="p" component="p" sx={{ color: "white" }}>
+            Book and Grab Your Ticket ASAP
+          </Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/search-bus"
+            size="large"
+            sx={{
+              mt: 5,
+              fontWeight: 600,
+              ":hover": { backgroundColor: "#622243", color: "#ffffff" },
+              color: "#2a2a2a",
+              paddingY: "12px",
+            }}
+          >
+            Book Now
+          </Button>
+        </Box>
+      </Box>
       <ToggleTable></ToggleTable>
-  </div>
+    </Box>
+  );
 };
 
 export default Hero;

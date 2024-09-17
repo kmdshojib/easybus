@@ -1,63 +1,153 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-
-
+import * as React from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import { useState } from "react";
+import { DataContext } from "../../../../context/DataProvider";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 export default function BasicTable() {
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const districts = [
+    {
+      value: "Please Select Location",
+      label: "Please Select Location",
+    },
+    {
+      value: "Dhaka",
+      label: "Dhaka",
+    },
+    {
+      value: "Chittagong",
+      label: "Chittagong",
+    },
+    {
+      value: "Sylhet",
+      label: "Sylhet",
+    },
+    {
+      value: "Rajshahi",
+      label: "Rajshahi",
+    },
+    {
+      value: "Khulna",
+      label: "Khulna",
+    },
+    {
+      value: "Barishal",
+      label: "Barishal",
+    },
+  ];
+  const [toLocation, setToLocation] = useState(districts);
+  const { register, handleSubmit } = useForm();
+  const { setJourneyDate, setFromToLocation, fromToLocation } =
+    React.useContext(DataContext);
+  const navigate = useNavigate();
+  const handleSearch = (data) => {
+    setJourneyDate(data.date);
+    setFromToLocation({ from: data.from, to: data.to });
+    navigate(`/booking?from=${data.from}&to=${data.to}&date=${data.date}`);
   };
+  const handleSelect = (selectedvalue) => {
+    const remaining = districts.filter(
+      (district) => district.value !== selectedvalue
+    );
+    setToLocation(remaining);
+  };
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        {/* <TableHead>
-          <TableRow>
-            <TableCell>From</TableCell>
-            <TableCell align="right">To</TableCell>
-            <TableCell align="right">Depart</TableCell>
-            <TableCell align="right">Return</TableCell>
-            <TableCell align="right">Passenger</TableCell>
-          </TableRow>
-        </TableHead> */}
-        <TableBody>
-            <TableRow
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                <TextField id="filled-basic" label="From" variant="filled" />
-              </TableCell>
-              <TableCell align="right"><TextField id="filled-basic" label="To" variant="filled" /></TableCell>
-              <TableCell align="right">
-                <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">Category</InputLabel>
-        <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          value={age}
-          onChange={handleChange}
-          label="Age"
+    <form onSubmit={handleSubmit(handleSearch)}>
+      <Box sx={{ width: "100%" }}>
+        <Grid
+          container
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, lg: 4, md: 3 }}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={'Adventure'}>Adventure</MenuItem>
-          <MenuItem value={'Family Tour'}>Family Tour</MenuItem>
-        </Select>
-      </FormControl></TableCell>
-              <TableCell align="right"><p>Depart-Return</p></TableCell>
-              <TableCell align="right"><TextField id="filled-basic" label="Passengers" variant="filled" /></TableCell>
-            </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+          <Grid item xs={12} lg={4} md={6}>
+            <TextField
+              id="from"
+              select
+              label="From"
+              defaultValue="Please Select Location"
+              variant="standard"
+              sx={{ width: "100%" }}
+              {...register("from", { required: true })}
+              onChange={(e) => handleSelect(e.target.value)}
+            >
+              {districts.map((option, i) => (
+                <MenuItem key={i} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} lg={4} md={6}>
+            <TextField
+              id="to"
+              select
+              label="To"
+              sx={{ width: "100%" }}
+              defaultValue="Please Select Location"
+              variant="standard"
+              {...register("to", { required: true })}
+            >
+              {toLocation.map((option, i) => (
+                <MenuItem key={i} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            lg={4}
+            sx={{ display: "flex", alignItems: "end" }}
+          >
+            <Input
+              id="filled-basic"
+              label="Filled"
+              variant="filled"
+              sx={{ width: "100%" }}
+              type="date"
+              {...register("date", { required: true })}
+            />
+          </Grid>
+        </Grid>
+        <Box>
+          
+          <Button
+            
+            type="submit"
+            variant="contained"
+            sx={{
+              mt:4,
+              fontWeight: 600,
+              ":hover": { backgroundColor: "#622243", color: "#ffffff" },
+              color: "#2a2a2a",
+              paddingY: "15px",
+            }}
+          >
+            Book Now
+          </Button>
+        </Box>
+      </Box>
+    </form>
   );
 }

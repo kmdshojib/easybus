@@ -46,7 +46,7 @@ const options = [
 const ServiceOptions = () => {
   return (
     <div>
-      <Box py={10} sx={{ bgcolor: "#FBF9F2" }}>
+      <Box py={10} sx={{ bgcolor: "#FBF9F2",mx:"auto" }} maxWidth={{ xs: "100%", md: "100%", lg: "95%" }}>
         <Stack maxWidth={"90%"} mx={"auto"}>
           <Typography variant="h6" fontSize={18} color={"#FFA903"}>
             WHY EASY BUS
@@ -86,13 +86,14 @@ const ServiceOptions = () => {
                   <Card
                     sx={{
                       paddingTop: "20px",
-                      boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.05)",
+                      borderRadius:"20px",
+                      boxShadow: "0px 0px 10px 2px rgba(0,0,0,0.05)",
                       ":hover": {
-                        boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.25)",
+                        boxShadow:"0px 0px 20px 5px #0000002e",
                         cursor: "pointer",
                         "& .service-icon": {
                           rotate: "360deg",
-                          transition: "all 1s",
+                          transition: "all 3s",
                         },
                       },
                     }}
@@ -113,7 +114,7 @@ const ServiceOptions = () => {
                         className="service-icon"
                       />
                     </IconButton>
-                    <CardContent sx={{ marginBottom: "0" }}>
+                    <CardContent sx={{ marginBottom: "0" ,minHeight:"180px"}}>
                       <Typography
                         variant="h6"
                         color={"#763F5B"}

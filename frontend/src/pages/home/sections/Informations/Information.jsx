@@ -23,13 +23,19 @@ const Information = ({info}) => {
             alignItems:'center',
             boxShadow:"0px 1px 16px 0px rgb(139 139 139 / 10%)",
             borderRadius:4,
-            ":hover":{
-                scale:0.5,
-                transition:0.3
-            }
+            ":hover": {
+                boxShadow:"0px 0px 20px 3px #0000002e",
+                cursor: "pointer",
+                scale:1,
+                transition: "all 1s",
+                "& .icon": {
+                    rotate: "360deg",
+                    transition: "all 3s",
+                  },
+              },
              }}>
-            <Box>
-                <img src={icon} alt="" width={"100%"} />
+            <Box className='icon'>
+                <img src={icon} alt="" width='45px' height='45px' />
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <CardContent sx={{ flex: '1 0 auto' }}>
